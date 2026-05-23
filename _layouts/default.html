@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang }}" dir="{% if page.lang == 'ar' %}rtl{% else %}ltr{% endif %}" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>{{ site.data.translations[page.lang].seo_title }}</title>
+  <meta name="title" content="{{ site.data.translations[page.lang].seo_title }}">
+  <meta name="description" content="{{ site.data.translations[page.lang].seo_description }}">
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical & Language Alternates -->
+  <link rel="canonical" href="{{ site.url | default: '' }}{{ site.baseurl }}{% if page.lang == 'de' %}/{% else %}/{{ page.lang }}/{% endif %}">
+  <link rel="alternate" hreflang="ar" href="{{ site.url | default: '' }}{{ site.baseurl }}/ar/">
+  <link rel="alternate" hreflang="en" href="{{ site.url | default: '' }}{{ site.baseurl }}/en/">
+  <link rel="alternate" hreflang="de" href="{{ site.url | default: '' }}{{ site.baseurl }}/">
+  <link rel="alternate" hreflang="x-default" href="{{ site.url | default: '' }}{{ site.baseurl }}/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url | default: '' }}{{ site.baseurl }}{% if page.lang == 'de' %}/{% else %}/{{ page.lang }}/{% endif %}">
+  <meta property="og:title" content="{{ site.data.translations[page.lang].seo_title }}">
+  <meta property="og:description" content="{{ site.data.translations[page.lang].seo_description }}">
+  <meta property="og:image" content="https://picsum.photos/id/180/1200/630">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ site.url | default: '' }}{{ site.baseurl }}{% if page.lang == 'de' %}/{% else %}/{{ page.lang }}/{% endif %}">
+  <meta property="twitter:title" content="{{ site.data.translations[page.lang].seo_title }}">
+  <meta property="twitter:description" content="{{ site.data.translations[page.lang].seo_description }}">
+  <meta property="twitter:image" content="https://picsum.photos/id/180/1200/630">
+  
+  <!-- CSS CDNs -->
+  <!-- Tailwind CSS via Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'Cairo', 'sans-serif'],
+            }
+          }
+        }
+      }
+    }
+    // Prevent flash of light mode on dark preference
+    const savedTheme = localStorage.getItem("portfolio-theme") || "dark";
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  </script>
+
+  <!-- Animate.css for entrance animations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"/>
+  
+  <!-- AOS (Animate on Scroll) CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.css"/>
+  
+  <!-- FontAwesome Pro v7.0.1 -->
+  <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v7.0.1/css/pro.min.css"/>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/styles.css">
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200 transition-colors duration-300 min-h-screen flex flex-col dotted-bg">
+
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-40 bg-zinc-50/80 dark:bg-zinc-950/80 border-b border-zinc-200/60 dark:border-zinc-900/40 backdrop-blur-md transition-all duration-300">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      {% if site.first_name %}
+      <a href="#home" class="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-sm tracking-tight hover:opacity-85 transition-opacity">
+        <span class="inline-block w-2.5 h-2.5 bg-zinc-800 dark:bg-zinc-200 rounded-sm"></span>
+        <span data-profile="brand-name">{{ site.first_name }}{{ site.last_name }}</span>
+      </a>
+      {% elsif site.last_name %}
+      <a href="#home" class="flex items-center gap-2 text-zinc-900 dark:text-white font-bold text-sm tracking-tight hover:opacity-85 transition-opacity">
+        <span class="inline-block w-2.5 h-2.5 bg-zinc-800 dark:bg-zinc-200 rounded-sm"></span>
+        <span data-profile="brand-name">{{ site.first_name }}{{ site.last_name }}</span>
+      </a>
+      {% endif %}
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold">
+        <a href="#home" data-i18n="nav_home" class="nav-link text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">{{ site.data.translations[page.lang].nav_home }}</a>
+        <a href="#about" data-i18n="nav_about" class="nav-link text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">{{ site.data.translations[page.lang].nav_about }}</a>
+        <a href="#projects" data-i18n="nav_projects" class="nav-link text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">{{ site.data.translations[page.lang].nav_projects }}</a>
+        <a href="#contact" data-i18n="nav_contact" class="nav-link text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">{{ site.data.translations[page.lang].nav_contact }}</a>
+      </nav>
+
+      <!-- Language & Theme Controllers -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Language Switcher (Anchor links pointing to respective paths) -->
+        <div class="inline-flex border border-zinc-200 dark:border-zinc-800/80 p-0.5 rounded text-[10px] font-bold bg-white dark:bg-zinc-900">
+          <a href="{{ site.baseurl }}/ar/" id="lang-ar" class="px-2 py-1 rounded-sm uppercase transition-all duration-200 {% if page.lang == 'ar' %}bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white{% else %}text-zinc-500 hover:text-zinc-900 dark:hover:text-white{% endif %}">AR</a>
+          <a href="{{ site.baseurl }}/" id="lang-de" class="px-2 py-1 rounded-sm uppercase transition-all duration-200 {% if page.lang == 'de' %}bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white{% else %}text-zinc-500 hover:text-zinc-900 dark:hover:text-white{% endif %}">DE</a>
+          <a href="{{ site.baseurl }}/en/" id="lang-en" class="px-2 py-1 rounded-sm uppercase transition-all duration-200 {% if page.lang == 'en' %}bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white{% else %}text-zinc-500 hover:text-zinc-900 dark:hover:text-white{% endif %}">EN</a>
+        </div>
+
+        <!-- Day/Night Toggle Button -->
+        <button id="theme-toggle" class="p-1.5 border border-zinc-200 dark:border-zinc-800/80 rounded bg-white dark:bg-zinc-900 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-950 transition-all duration-200" aria-label="Toggle Theme">
+          <i id="theme-sun" class="fa-regular fa-sun text-xs hidden"></i>
+          <i id="theme-moon" class="fa-regular fa-moon text-xs"></i>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-1.5 border border-zinc-200 dark:border-zinc-800/80 rounded bg-white dark:bg-zinc-900 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-all duration-200" aria-label="Menu">
+          <i class="fa-regular fa-bars text-xs"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-950 flex-col px-4 py-3 gap-3 text-xs font-semibold animate__animated animate__fadeIn">
+      <a href="#home" data-i18n="nav_home" class="py-1.5 border-b border-zinc-100 dark:border-zinc-900 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">{{ site.data.translations[page.lang].nav_home }}</a>
+      <a href="#about" data-i18n="nav_about" class="py-1.5 border-b border-zinc-100 dark:border-zinc-900 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">{{ site.data.translations[page.lang].nav_about }}</a>
+      <a href="#projects" data-i18n="nav_projects" class="py-1.5 border-b border-zinc-100 dark:border-zinc-900 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">{{ site.data.translations[page.lang].nav_projects }}</a>
+      <a href="#contact" data-i18n="nav_contact" class="py-1.5 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">{{ site.data.translations[page.lang].nav_contact }}</a>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-5xl mx-auto w-full md:border-x border-zinc-200/60 dark:border-zinc-900/40 bg-white/30 dark:bg-zinc-950/15 backdrop-blur-[1px] relative">
+    
+    <!-- Outer Location Coordinates Vertical Label -->
+    {% if site.coordinates %}
+    <div class="hidden xl:flex items-center gap-1.5 absolute -left-12 top-28 text-[9px] font-mono text-zinc-400/50 dark:text-zinc-600/40 select-none">
+      <span class="tech-margin-label" data-profile="coordinates">{{ site.coordinates }}</span>
+      <span class="w-[1px] h-12 bg-zinc-200 dark:bg-zinc-900"></span>
+    </div>
+    {% endif %}
+
+    <!-- Outer Build / Version Info Vertical Label -->
+    {% if site.first_name %}
+    <div class="hidden xl:flex items-center gap-1.5 absolute -right-12 top-28 text-[9px] font-mono text-zinc-400/50 dark:text-zinc-600/40 select-none">
+      <span class="w-[1px] h-12 bg-zinc-200 dark:bg-zinc-900"></span>
+      <span class="tech-margin-label" data-profile="version-label">[{{ site.first_name | upcase }}_PORTFOLIO_V3.0]</span>
+    </div>
+    {% endif %}
+
+    <!-- Ornaments -->
+    <div class="tech-crosshair absolute -left-[5px] top-0"></div>
+    <div class="tech-crosshair absolute -right-[5px] top-0"></div>
+
+    <!-- Hero / Introduction Section -->
+    <section id="home" class="px-4 py-16 md:py-28 grid grid-cols-1 md:grid-cols-12 gap-12 items-center relative">
+      
+      <!-- Intro details (aligned with dynamic text-start) -->
+      <div class="{% if site.github_username %}md:col-span-7{% else %}md:col-span-12{% endif %} space-y-5 text-start" data-aos="fade-up">
+        
+        <!-- Status badge -->
+        <div class="inline-flex items-center gap-2 px-2.5 py-1 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded text-[10px] font-bold text-zinc-500 dark:text-zinc-400">
+          <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+          <span data-i18n="hero_status">{{ site.data.translations[page.lang].hero_status }}</span>
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
+          <span class="block text-zinc-400 dark:text-zinc-500 text-xs font-bold tracking-wider uppercase mb-1.5" data-i18n="hero_greeting">{{ site.data.translations[page.lang].hero_greeting }}</span>
+          <span data-i18n="hero_role">{{ site.data.translations[page.lang].hero_role }}</span>
+        </h1>
+        <p class="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-lg" data-i18n="hero_description">
+          {{ site.data.translations[page.lang].hero_description }}
+        </p>
+        
+        <div class="flex flex-wrap gap-3 pt-2 justify-start">
+          <a href="#projects" data-i18n="hero_cta_projects" class="px-5 py-2.5 text-xs font-bold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-colors duration-200 rounded">
+            {{ site.data.translations[page.lang].hero_cta_projects }}
+          </a>
+          <a href="#contact" data-i18n="hero_cta_contact" class="px-5 py-2.5 text-xs font-bold border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors duration-200 rounded">
+            {{ site.data.translations[page.lang].hero_cta_contact }}
+          </a>
+        </div>
+
+        <!-- Social Icons Row -->
+        {% if site.github_username %}
+        <div class="flex items-center gap-4 pt-6 text-zinc-400 dark:text-zinc-500">
+          <a href="https://github.com/{{ site.github_username }}" data-profile="github-link" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="GitHub">
+            <i class="fa-brands fa-github text-lg"></i>
+          </a>
+          {% if site.linkedin_url %}
+          <a href="{{ site.linkedin_url }}" data-profile="linkedin-link" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in text-lg"></i>
+          </a>
+          {% endif %}
+          {% if site.instagram_url %}
+          <a href="{{ site.instagram_url }}" data-profile="instagram-link" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="Instagram">
+            <i class="fa-brands fa-instagram text-lg"></i>
+          </a>
+          {% endif %}
+          {% if site.email %}
+          <a href="mailto:{{ site.email }}" data-profile="email-link" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="Email">
+            <i class="fa-regular fa-envelope text-lg"></i>
+          </a>
+          {% endif %}
+        </div>
+        {% elsif site.linkedin_url %}
+        <div class="flex items-center gap-4 pt-6 text-zinc-400 dark:text-zinc-500">
+          <a href="{{ site.linkedin_url }}" data-profile="linkedin-link" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in text-lg"></i>
+          </a>
+          {% if site.instagram_url %}
+          <a href="{{ site.instagram_url }}" data-profile="instagram-link" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="Instagram">
+            <i class="fa-brands fa-instagram text-lg"></i>
+          </a>
+          {% endif %}
+          {% if site.email %}
+          <a href="mailto:{{ site.email }}" data-profile="email-link" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="Email">
+            <i class="fa-regular fa-envelope text-lg"></i>
+          </a>
+          {% endif %}
+        </div>
+        {% elsif site.email %}
+        <div class="flex items-center gap-4 pt-6 text-zinc-400 dark:text-zinc-500">
+          {% if site.instagram_url %}
+          <a href="{{ site.instagram_url }}" data-profile="instagram-link" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="Instagram">
+            <i class="fa-brands fa-instagram text-lg"></i>
+          </a>
+          {% endif %}
+          <a href="mailto:{{ site.email }}" data-profile="email-link" class="hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="Email">
+            <i class="fa-regular fa-envelope text-lg"></i>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Hero Minimal Image (Offset blocks for structural depth) -->
+      {% if site.github_username %}
+      <div class="md:col-span-5 flex justify-center" data-aos="fade-up">
+        <div class="relative group">
+          <!-- Solid background offset block -->
+          <div class="absolute -inset-1 bg-zinc-200 dark:bg-zinc-900 rounded translate-x-2.5 translate-y-2.5 transition-transform duration-300 group-hover:translate-x-1.5 group-hover:translate-y-1.5"></div>
+          <div class="relative w-64 h-64 md:w-80 md:h-80 border border-zinc-300 dark:border-zinc-800 p-2 bg-white dark:bg-zinc-950 rounded">
+            <img id="profile-avatar" src="https://github.com/{{ site.github_username }}.png" alt="{{ site.first_name }}" class="w-full h-full object-cover rounded-sm filter grayscale hover:grayscale-0 transition-all duration-700">
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="border-t border-zinc-200/60 dark:border-zinc-900/40 bg-white/40 dark:bg-zinc-950/20 py-16 md:py-24 relative">
+      <div class="tech-crosshair absolute -left-[5px] -top-[5px]"></div>
+      <div class="tech-crosshair absolute -right-[5px] -top-[5px]"></div>
+      <div class="px-4 grid grid-cols-1 md:grid-cols-12 gap-12">
+        
+        <!-- Bio Card -->
+        <div class="md:col-span-6 space-y-4" data-aos="fade-up">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-5 h-[1px] bg-zinc-400 dark:bg-zinc-600"></span>
+            <h2 class="text-base font-bold tracking-tight text-zinc-900 dark:text-white" data-i18n="about_title">{{ site.data.translations[page.lang].about_title }}</h2>
+          </div>
+          <h3 class="text-sm font-semibold text-zinc-700 dark:text-zinc-300 leading-snug" data-i18n="about_intro">{{ site.data.translations[page.lang].about_intro }}</h3>
+          <p class="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed" data-i18n="about_desc">
+            {{ site.data.translations[page.lang].about_desc }}
+          </p>
+        </div>
+
+        <!-- Categorized Skills Section -->
+        <div class="md:col-span-6 space-y-5" data-aos="fade-up">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-5 h-[1px] bg-zinc-400 dark:bg-zinc-600"></span>
+            <h3 class="text-base font-bold text-zinc-900 dark:text-white" data-i18n="skills_title">{{ site.data.translations[page.lang].skills_title }}</h3>
+          </div>
+          
+          <!-- Mock IDE Code Panel -->
+          <div class="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 font-mono text-[11px] rounded shadow-sm overflow-hidden select-none">
+            <!-- Title Bar -->
+            <div class="flex items-center justify-between px-3 py-2 bg-zinc-50 dark:bg-zinc-900/50 border-b border-zinc-200/60 dark:border-zinc-800/80">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-zinc-300 dark:bg-zinc-700"></span>
+                <span class="w-2 h-2 rounded-full bg-zinc-300 dark:bg-zinc-700"></span>
+                <span class="w-2 h-2 rounded-full bg-zinc-300 dark:bg-zinc-700"></span>
+                <span class="text-[9px] text-zinc-400 dark:text-zinc-500 ml-2 font-semibold">skills.json</span>
+              </div>
+              <div class="text-[9px] text-zinc-400 dark:text-zinc-500 uppercase tracking-widest font-bold">JSON</div>
+            </div>
+            
+            <!-- Editor Tabs -->
+            <div class="flex border-b border-zinc-100 dark:border-zinc-900 bg-zinc-50/50 dark:bg-zinc-900/30">
+              <button id="tab-frontend" onclick="switchSkillTab('frontend')" class="px-3 py-1.5 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200 font-bold border-b border-b-transparent">frontend.json</button>
+              <button id="tab-backend" onclick="switchSkillTab('backend')" class="px-3 py-1.5 border-r border-zinc-200 dark:border-zinc-800 text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300">backend.json</button>
+              <button id="tab-tools" onclick="switchSkillTab('tools')" class="px-3 py-1.5 border-r border-zinc-200 dark:border-zinc-800 text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300">tools.json</button>
+            </div>
+            
+            <!-- Code view area -->
+            <div class="p-4 bg-white/80 dark:bg-zinc-950/80 min-h-[150px] relative">
+              <div id="skills-code-content" class="leading-relaxed">
+                <!-- Content will be injected dynamically by JS -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="px-4 py-16 md:py-24 space-y-8 border-t border-zinc-200/60 dark:border-zinc-900/40 relative">
+      <div class="tech-crosshair absolute -left-[5px] -top-[5px]"></div>
+      <div class="tech-crosshair absolute -right-[5px] -top-[5px]"></div>
+      
+      <!-- Heading -->
+      <div class="text-center space-y-2" data-aos="fade-up">
+        <h2 class="text-base font-bold tracking-tight text-zinc-900 dark:text-white" data-i18n="projects_title">{{ site.data.translations[page.lang].projects_title }}</h2>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-md mx-auto" data-i18n="projects_subtitle">{{ site.data.translations[page.lang].projects_subtitle }}</p>
+      </div>
+
+      <!-- Filters List -->
+      {% if site.enable_project_categories %}
+      <div id="projects-filters" class="flex flex-wrap items-center justify-center gap-2" data-aos="fade-up">
+        <button data-filter="all" class="filter-btn px-4 py-1.5 text-xs font-semibold bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white rounded transition-colors" data-i18n="project_filter_all">{{ site.data.translations[page.lang].project_filter_all }}</button>
+        <button data-filter="frontend" class="filter-btn px-4 py-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400 rounded transition-colors" data-i18n="project_filter_frontend">{{ site.data.translations[page.lang].project_filter_frontend }}</button>
+        <button data-filter="backend" class="filter-btn px-4 py-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400 rounded transition-colors" data-i18n="project_filter_backend">{{ site.data.translations[page.lang].project_filter_backend }}</button>
+        <button data-filter="fullstack" class="filter-btn px-4 py-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400 rounded transition-colors" data-i18n="project_filter_fullstack">{{ site.data.translations[page.lang].project_filter_fullstack }}</button>
+      </div>
+      {% endif %}
+
+      <!-- Projects Grid (populated statically via Jekyll) -->
+      {% if site.enable_masonry %}
+      <div id="projects-grid" class="columns-1 sm:columns-2 lg:columns-4 gap-6 pt-4 space-y-6 sm:space-y-0">
+      {% else %}
+      <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
+      {% endif %}
+        {% assign sorted_projects = site.projects | sort: "id" %}
+        {% for project in sorted_projects %}
+          {% assign p_title = project.title_de %}
+          {% assign p_desc = project.description_de %}
+          {% if page.lang == 'ar' %}
+            {% assign p_title = project.title_ar %}
+            {% assign p_desc = project.description_ar %}
+          {% elsif page.lang == 'en' %}
+            {% assign p_title = project.title_en %}
+            {% assign p_desc = project.description_en %}
+          {% endif %}
+          
+          {% if site.enable_masonry %}
+          <div class="project-card group border border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-950/40 p-4 rounded flex flex-col justify-between transition-all duration-300 hover:border-zinc-400 dark:hover:border-zinc-700 hover:shadow-lg dark:hover:shadow-zinc-900/50 hover:-translate-y-1 relative overflow-hidden cursor-pointer break-inside-avoid w-full mb-6"
+          {% else %}
+          <div class="project-card group border border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-950/40 p-4 rounded flex flex-col justify-between transition-all duration-300 hover:border-zinc-400 dark:hover:border-zinc-700 hover:shadow-lg dark:hover:shadow-zinc-900/50 hover:-translate-y-1 relative overflow-hidden cursor-pointer h-full"
+          {% endif %}
+               data-id="{{ project.id }}"
+               data-category="{{ project.category }}"
+               data-title-en="{{ project.title_en }}"
+               data-title-ar="{{ project.title_ar }}"
+               data-title-de="{{ project.title_de }}"
+               data-desc-en="{{ project.description_en }}"
+               data-desc-ar="{{ project.description_ar }}"
+               data-desc-de="{{ project.description_de }}"
+               data-image="{{ project.image }}"
+               data-images="{{ project.images }}"
+               data-tags="{{ project.tags }}"
+               data-demo-link="{{ project.demoLink }}"
+               data-repo-link="{{ project.repoLink }}">
+            
+            <div>
+              <div class="flex items-center justify-between text-[9px] font-mono text-zinc-400 dark:text-zinc-500 mb-2">
+                <span>[PRJ-0{{ project.id }}]</span>
+                <span class="uppercase tracking-wider font-semibold px-1.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 rounded-sm">
+                  {{ project.category }}
+                </span>
+              </div>
+              <div class="overflow-hidden rounded-sm mb-4 relative aspect-[16/10] bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/50 dark:border-zinc-800/40">
+                <img src="{{ project.image }}" alt="{{ p_title }}" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02] filter grayscale hover:grayscale-0 group-hover:grayscale-0">
+                <div class="absolute inset-0 bg-black/5 dark:bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              <h3 class="text-xs font-bold text-zinc-900 dark:text-white mb-1.5 leading-snug tracking-tight {% unless site.enable_masonry %}line-clamp-2 h-8{% endunless %}">{{ p_title }}</h3>
+              <p class="text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed mb-4 {% unless site.enable_masonry %}h-9{% endunless %}">{{ p_desc }}</p>
+            </div>
+            <div>
+              <div class="flex flex-wrap gap-1 mb-4 {% unless site.enable_masonry %}h-5 overflow-hidden{% endunless %}">
+                {% assign project_tags = project.tags | split: "," %}
+                {% for tag in project_tags %}
+                  <span class="px-2 py-0.5 text-[9px] font-medium bg-zinc-100 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 rounded-sm border border-zinc-200/40 dark:border-zinc-800/40">{{ tag | strip }}</span>
+                {% endfor %}
+              </div>
+              <div class="flex items-center justify-between w-full">
+                <div class="group/link inline-flex items-center gap-1.5 text-xs font-bold text-zinc-900 dark:text-white hover:opacity-80 transition-opacity">
+                  <span>{{ site.data.translations[page.lang].modal_details_title | default: "Details" }}</span>
+                  <span class="inline-block transition-transform duration-200 ltr:group-hover/link:translate-x-1 rtl:group-hover/link:-translate-x-1">{% if page.lang == 'ar' %}←{% else %}→{% endif %}</span>
+                </div>
+                <div class="flex items-center gap-2 relative z-10">
+                  {% if project.repoLink %}
+                    <a href="{{ project.repoLink }}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="GitHub Repository">
+                      <i class="fa-brands fa-github text-sm"></i>
+                    </a>
+                  {% endif %}
+                  {% if project.demoLink %}
+                    <a href="{{ project.demoLink }}" target="_blank" rel="noopener noreferrer" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors" aria-label="Live Demo">
+                      <i class="fa-regular fa-external-link text-sm"></i>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Hidden template tag for project body description -->
+            <script type="text/markdown" id="project-content-{{ project.id }}">
+              {{ project.content }}
+            </script>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- Contact & Socials Section -->
+    <section id="contact" class="border-t border-zinc-200/60 dark:border-zinc-900/40 bg-white/40 dark:bg-zinc-950/20 py-16 md:py-24 relative">
+      <div class="tech-crosshair absolute -left-[5px] -top-[5px]"></div>
+      <div class="tech-crosshair absolute -right-[5px] -top-[5px]"></div>
+      <div class="px-4 space-y-8" data-aos="fade-up">
+        
+        <div class="text-center space-y-2">
+          <h2 class="text-base font-bold tracking-tight text-zinc-900 dark:text-white" data-i18n="contact_title">{{ site.data.translations[page.lang].contact_title }}</h2>
+          <p class="text-xs text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto" data-i18n="contact_subtitle">{{ site.data.translations[page.lang].contact_subtitle }}</p>
+        </div>
+
+        <div class="flex flex-wrap items-stretch justify-center gap-4 pt-4">
+          
+          {% if site.email %}
+          <a href="mailto:{{ site.email }}" data-profile="email-link" class="group flex-grow flex-shrink basis-full sm:basis-[calc(50%-16px)] lg:basis-[calc(25%-16px)] max-w-sm border border-zinc-200/80 dark:border-zinc-900/60 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-sm p-5 rounded hover:-translate-y-1 hover:border-zinc-300 dark:hover:border-zinc-800 hover:shadow-xl hover:shadow-zinc-200/5 dark:hover:shadow-black/20 transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded bg-zinc-100 dark:bg-zinc-900/80 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-zinc-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-zinc-900 transition-colors duration-300">
+                <i class="fa-regular fa-envelope text-sm"></i>
+              </div>
+              <div class="space-y-0.5">
+                <span class="block text-[8px] font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Email</span>
+                <span class="block text-xs font-semibold text-zinc-800 dark:text-zinc-200 break-all">{{ site.email }}</span>
+              </div>
+            </div>
+          </a>
+          {% endif %}
+
+          {% if site.coordinates %}
+          <div class="group flex-grow flex-shrink basis-full sm:basis-[calc(50%-16px)] lg:basis-[calc(25%-16px)] max-w-sm border border-zinc-200/80 dark:border-zinc-900/60 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-sm p-5 rounded hover:-translate-y-1 hover:border-zinc-300 dark:hover:border-zinc-800 hover:shadow-xl hover:shadow-zinc-200/5 dark:hover:shadow-black/20 transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded bg-zinc-100 dark:bg-zinc-900/80 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-zinc-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-zinc-900 transition-colors duration-300">
+                <i class="fa-regular fa-location-dot text-sm"></i>
+              </div>
+              <div class="space-y-0.5">
+                <span class="block text-[8px] font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Location</span>
+                <span class="block text-xs font-semibold text-zinc-800 dark:text-zinc-200" data-i18n="contact_location">{{ site.data.translations[page.lang].contact_location }}</span>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if site.github_username %}
+          <a href="https://github.com/{{ site.github_username }}" data-profile="github-link" target="_blank" rel="noopener noreferrer" class="group flex-grow flex-shrink basis-full sm:basis-[calc(50%-16px)] lg:basis-[calc(25%-16px)] max-w-sm border border-zinc-200/80 dark:border-zinc-900/60 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-sm p-5 rounded hover:-translate-y-1 hover:border-zinc-300 dark:hover:border-zinc-800 hover:shadow-xl hover:shadow-zinc-200/5 dark:hover:shadow-black/20 transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded bg-zinc-100 dark:bg-zinc-900/80 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-zinc-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-zinc-900 transition-colors duration-300">
+                <i class="fa-brands fa-github text-sm"></i>
+              </div>
+              <div class="space-y-0.5">
+                <span class="block text-[8px] font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">GitHub</span>
+                <span class="block text-xs font-semibold text-zinc-800 dark:text-zinc-200">@{{ site.github_username }}</span>
+              </div>
+            </div>
+          </a>
+          {% endif %}
+
+          {% if site.instagram_url %}
+          <a href="{{ site.instagram_url }}" data-profile="instagram-link" target="_blank" rel="noopener noreferrer" class="group flex-grow flex-shrink basis-full sm:basis-[calc(50%-16px)] lg:basis-[calc(25%-16px)] max-w-sm border border-zinc-200/80 dark:border-zinc-900/60 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-sm p-5 rounded hover:-translate-y-1 hover:border-zinc-300 dark:hover:border-zinc-800 hover:shadow-xl hover:shadow-zinc-200/5 dark:hover:shadow-black/20 transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded bg-zinc-100 dark:bg-zinc-900/80 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-zinc-900 dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-zinc-900 transition-colors duration-300">
+                <i class="fa-brands fa-instagram text-sm"></i>
+              </div>
+              <div class="space-y-0.5">
+                <span class="block text-[8px] font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Instagram</span>
+                <span class="block text-xs font-semibold text-zinc-800 dark:text-zinc-200">@{{ site.instagram_username }}</span>
+              </div>
+            </div>
+          </a>
+          {% endif %}
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-200 dark:border-zinc-900 py-6 bg-white dark:bg-zinc-950 text-center text-[10px] font-medium text-zinc-400 dark:text-zinc-500 transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div id="footer-copy" data-i18n="footer_copyright" class="cursor-default select-none">{{ site.data.translations[page.lang].footer_copyright }}</div>
+      <div class="flex items-center gap-3">
+        {% if site.github_username %}
+        <a href="https://github.com/{{ site.github_username }}" data-profile="github-link" target="_blank" rel="noopener" class="hover:text-zinc-700 dark:hover:text-white transition-colors">GitHub</a>
+        {% endif %}
+        {% if site.github_username %}
+          {% if site.linkedin_url %}
+          <span>·</span>
+          {% elsif site.instagram_url %}
+          <span>·</span>
+          {% elsif site.email %}
+          <span>·</span>
+          {% endif %}
+        {% endif %}
+        {% if site.linkedin_url %}
+        <a href="{{ site.linkedin_url }}" data-profile="linkedin-link" target="_blank" rel="noopener" class="hover:text-zinc-700 dark:hover:text-white transition-colors">LinkedIn</a>
+        {% endif %}
+        {% if site.linkedin_url %}
+          {% if site.instagram_url %}
+          <span>·</span>
+          {% elsif site.email %}
+          <span>·</span>
+          {% endif %}
+        {% endif %}
+        {% if site.instagram_url %}
+        <a href="{{ site.instagram_url }}" data-profile="instagram-link" target="_blank" rel="noopener" class="hover:text-zinc-700 dark:hover:text-white transition-colors">Instagram</a>
+        {% endif %}
+        {% if site.instagram_url %}
+          {% if site.email %}
+          <span>·</span>
+          {% endif %}
+        {% endif %}
+        {% if site.email %}
+          {% if site.github_username %}
+          {% elsif site.linkedin_url %}
+          {% elsif site.instagram_url %}
+          {% else %}
+          {% endif %}
+        {% endif %}
+        {% if site.email %}
+        <a href="mailto:{{ site.email }}" data-profile="email-link" class="hover:text-zinc-700 dark:hover:text-white transition-colors">Email</a>
+        {% endif %}
+      </div>
+    </div>
+  </footer>
+
+  <!-- Project Details Modal (Hidden by Default) -->
+  <div id="project-modal" class="hidden fixed inset-0 z-50 bg-zinc-950/60 backdrop-blur-sm items-center justify-center p-4">
+    <div id="modal-box" class="w-full max-w-xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-6 rounded flex flex-col justify-between max-h-[90vh] overflow-y-auto space-y-4">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-900 pb-3">
+        <h3 id="modal-project-title" class="text-xs md:text-sm font-bold text-zinc-950 dark:text-white"></h3>
+        <button onclick="closeProjectModal()" class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+          <i class="fa-regular fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Embla Carousel Viewport -->
+      <div class="embla mt-2">
+        <div class="embla__viewport overflow-hidden border border-zinc-200 dark:border-zinc-800 rounded-sm" id="embla-viewport">
+          <div class="embla__container flex" id="carousel-container">
+            <!-- Carousel slides loaded dynamically by JS -->
+          </div>
+        </div>
+        <!-- Carousel Nav Buttons -->
+        <button id="carousel-prev" class="absolute top-1/2 left-3 -translate-y-1/2 w-7 h-7 flex items-center justify-center border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white rounded hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all text-xs" aria-label="Previous image">
+          <i class="fa-regular fa-chevron-left"></i>
+        </button>
+        <button id="carousel-next" class="absolute top-1/2 right-3 -translate-y-1/2 w-7 h-7 flex items-center justify-center border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-950/90 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white rounded hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all text-xs" aria-label="Next image">
+          <i class="fa-regular fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Modal Info -->
+      <div class="space-y-2">
+        <h4 class="text-[9px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500" data-i18n="modal_details_title">{{ site.data.translations[page.lang].modal_details_title }}</h4>
+        <p id="modal-project-desc" class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed"></p>
+      </div>
+
+      <!-- Modal Footer actions -->
+      <div class="flex items-center gap-3 pt-3 border-t border-zinc-100 dark:border-zinc-900">
+        <a id="modal-demo-link" href="#" target="_blank" rel="noopener" class="flex-1 text-center py-2 text-xs font-bold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 rounded transition-colors">
+          <span id="modal-demo-text" data-i18n="modal_view_demo">{{ site.data.translations[page.lang].modal_view_demo }}</span>
+          <i class="fa-regular fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+        </a>
+        <a id="modal-repo-link" href="#" target="_blank" rel="noopener" class="flex-1 text-center py-2 text-xs font-bold border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded transition-colors">
+          <span id="modal-repo-text" data-i18n="modal_view_repo">{{ site.data.translations[page.lang].modal_view_repo }}</span>
+          <i class="fa-brands fa-github text-[10px] ml-1"></i>
+        </a>
+        <button onclick="closeProjectModal()" class="px-4 py-2 text-xs text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors">
+          <span id="modal-close-text" data-i18n="modal_close">{{ site.data.translations[page.lang].modal_close }}</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JS CDNs -->
+  <!-- GSAP Animation Library -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <!-- AOS Scroll Revealer JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+
+  <!-- Embla Carousel Slider JS -->
+  <script src="https://cdn.jsdelivr.net/npm/embla-carousel@8.6.0/embla-carousel.umd.min.js"></script>
+
+  <!-- LDRS Spinner Component (ES Modules setup) -->
+  <script type="module">
+    import { ring } from 'https://cdn.jsdelivr.net/npm/ldrs@1.1.9/dist/index.js'
+    ring.register()
+  </script>
+
+  <!-- Custom Logic Script -->
+  <script src="{{ site.baseurl }}/assets/js/app.js"></script>
+  
+  {{ content }}
+</body>
+</html>

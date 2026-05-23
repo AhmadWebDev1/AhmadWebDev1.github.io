@@ -1,0 +1,19 @@
+# Site settings
+title: Ahmad Portfolio
+first_name: Ahmad
+last_name: WebDev
+email: contact@example.com
+github_username: AhmadWebDev1
+linkedin_url: 
+instagram_url: ahmad.alkhatib.official
+coordinates: "51.1657° N, 10.4515° E"
+baseurl: "" # Set to "/repo-name" if deploying to a GitHub project page (e.g. username.github.io/repo-name)
+
+# Optional features
+enable_project_categories: true
+enable_masonry: false
+
+# Collections configuration for Jekyll
+collections:
+  projects:
+    output: false

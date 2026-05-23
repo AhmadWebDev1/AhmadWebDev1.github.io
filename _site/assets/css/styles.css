@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-en: 'Inter', sans-serif;
+  --font-ar: 'Cairo', sans-serif;
+}
+
+/* Base Setup */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-en);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[dir="rtl"] body {
+  font-family: var(--font-ar);
+}
+
+/* Premium Minimalist Dotted Grid Background */
+.dotted-bg {
+  background-image: radial-gradient(rgba(120, 120, 120, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .dotted-bg {
+  background-image: radial-gradient(rgba(244, 244, 245, 0.04) 1px, transparent 1px);
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(63, 63, 70, 0.4); /* zinc-700/40 */
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(228, 228, 231, 0.8); /* zinc-200 */
+  border-radius: 0.25rem;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(82, 82, 91, 0.6); /* zinc-600 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 212, 216, 1); /* zinc-300 */
+}
+
+/* Embla Carousel styles */
+.embla {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.embla__container {
+  display: flex;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+/* Minimal Underline Transition for Nav Links */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.2s ease-out;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+[dir="rtl"] .nav-link::after {
+  transform-origin: bottom left;
+}
+
+[dir="rtl"] .nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom right;
+}
+
+/* Form Focus Ring Tweaks */
+input:focus, textarea:focus {
+  outline: none;
+  border-color: rgb(113, 113, 122) !important; /* zinc-500 */
+}
+
+.dark input:focus, .dark textarea:focus {
+  border-color: rgb(161, 161, 170) !important; /* zinc-400 */
+}
+
+/* Technical CAD/Blueprint Section Ornaments */
+.tech-crosshair {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(120, 120, 120, 0.4);
+  pointer-events: none;
+  z-index: 10;
+}
+.tech-crosshair::before {
+  content: '+';
+}
+
+.dark .tech-crosshair {
+  color: rgba(244, 244, 245, 0.15);
+}
+
+/* IDE Code Panel Syntax Colors */
+.syntax-key {
+  color: rgb(113, 113, 122); /* zinc-500 */
+}
+.dark .syntax-key {
+  color: rgb(161, 161, 170); /* zinc-400 */
+}
+
+.syntax-val {
+  color: rgb(5, 150, 105); /* emerald-600 */
+}
+.dark .syntax-val {
+  color: rgb(52, 211, 153); /* emerald-400 */
+}
+
+.syntax-punct {
+  color: rgb(161, 161, 170); /* zinc-400 */
+}
+.dark .syntax-punct {
+  color: rgb(82, 82, 91); /* zinc-600 */
+}
+
+/* Technical Vertical Label tag */
+.tech-margin-label {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}

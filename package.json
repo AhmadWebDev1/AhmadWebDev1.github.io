@@ -1,0 +1,14 @@
+{
+  "name": "ahmad-portfolio",
+  "version": "3.0.0",
+  "description": "Ahmad Minimal Portfolio Website",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --watch",
+    "start": "node build.js && npx live-server _site"
+  },
+  "keywords": [],
+  "author": "Ahmad",
+  "license": "ISC"
+}
