@@ -129,8 +129,8 @@ function parseProjectFile(filePath) {
     image: frontmatter.image || '',
     images: images,
     tags: tags,
-    demoLink: frontmatter.demoLink || '',
-    repoLink: frontmatter.repoLink || '',
+    demoLink: frontmatter.demoLink || frontmatter.demo_link || '',
+    repoLink: frontmatter.repoLink || frontmatter.repo_link || '',
     longDescription: longDescription
   };
 }

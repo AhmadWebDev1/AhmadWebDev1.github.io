@@ -7,8 +7,8 @@ title_de: Ahmads Portfolio
 description_en: The source code of this minimalist, high-end bilingual web development portfolio.
 description_ar: كود المصدر الخاص بموقع المعرض التعريفي هذا المزدوج اللغة وعالي الجودة.
 description_de: Der Quellcode dieses minimalistischen, erstklassigen Webentwicklungs-Portfolios.
-image: https://picsum.photos/id/26/800/600
-images: https://picsum.photos/id/26/800/600, https://picsum.photos/id/15/800/600, https://picsum.photos/id/19/800/600
+image: /assets/img/portfolio/1.png
+images: /assets/img/portfolio/1.png, /assets/img/portfolio/2.png, /assets/img/portfolio/3.png, /assets/img/portfolio/4.png, /assets/img/portfolio/5.png, /assets/img/portfolio/6.png
 tags: Tailwind, JavaScript, GSAP, AOS
 demoLink: https://ahmadwebdev1.github.io/
 repoLink: https://github.com/AhmadWebDev1

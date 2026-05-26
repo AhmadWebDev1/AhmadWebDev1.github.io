@@ -228,8 +228,8 @@ window.openProjectModal = function(id) {
   const images = project.images && project.images.length > 0 ? project.images : [project.image];
   images.forEach(imgUrl => {
     const slide = document.createElement("div");
-    slide.className = "embla__slide relative aspect-[16/10] bg-zinc-100 dark:bg-zinc-900";
-    slide.innerHTML = `<img src="${imgUrl}" alt="${title}" class="w-full h-full object-cover rounded-sm">`;
+    slide.className = "embla__slide relative bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center";
+    slide.innerHTML = `<img src="${imgUrl}" alt="${title}" class="w-full h-auto max-h-[60vh] object-contain rounded-sm">`;
     container.appendChild(slide);
   });
 
